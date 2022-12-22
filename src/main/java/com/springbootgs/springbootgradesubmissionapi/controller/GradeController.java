@@ -1,6 +1,5 @@
 package com.springbootgs.springbootgradesubmissionapi.controller;
 
-
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -19,40 +18,45 @@ import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
 @RestController
 @RequestMapping("/grade")
 public class GradeController {
-    
+    // GET the grade of a student (based on student Id) for a course (based on course id)
     @GetMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> getGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // POST - Create a grade for a student for a course
     @PostMapping("/student/{studentId}/course/{courseId}")
-    public ResponseEntity<Grade> saveGrade(@RequestBody Grade grade, @PathVariable Long studentId, @PathVariable Long courseId) {
+    public ResponseEntity<Grade> saveGrade(@PathVariable Long studentId, @PathVariable Long courseId, @RequestBody Grade grade) {
         return new ResponseEntity<>(grade, HttpStatus.CREATED);
     }
 
+    // PUT - Update a grade for a student for a course
     @PutMapping("/student/{studentId}/course/{courseId}")
-    public ResponseEntity<Grade> updateGrade(@RequestBody Grade grade, @PathVariable Long studentId, @PathVariable Long courseId) {
+    public ResponseEntity<Grade> updateGrade(@PathVariable Long studentId, @PathVariable Long courseId, @RequestBody Grade grade) {
         return new ResponseEntity<>(grade, HttpStatus.OK);
     }
 
+    // DELETE a grade for a student for a course
     @DeleteMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<HttpStatus> deleteGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // GET a list of a student's grades
     @GetMapping("/student/{studentId}")
     public ResponseEntity<List<Grade>> getStudentGrades(@PathVariable Long studentId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // GET a list of grades based on course
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Grade>> getCourseGrades(@PathVariable Long courseId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // GET all grades
     @GetMapping("/all")
     public ResponseEntity<List<Grade>> getGrades() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
