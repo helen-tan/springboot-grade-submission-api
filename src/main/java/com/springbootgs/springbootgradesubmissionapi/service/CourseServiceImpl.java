@@ -2,9 +2,11 @@ package com.springbootgs.springbootgradesubmissionapi.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.springbootgs.springbootgradesubmissionapi.entity.Course;
 
-
+@Service
 public class CourseServiceImpl implements CourseService {
 
     @Override

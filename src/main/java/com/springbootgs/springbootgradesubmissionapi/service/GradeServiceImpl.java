@@ -2,8 +2,11 @@ package com.springbootgs.springbootgradesubmissionapi.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
 
+@Service
 public class GradeServiceImpl implements GradeService {
     
     @Override

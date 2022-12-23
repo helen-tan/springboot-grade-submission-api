@@ -2,6 +2,7 @@ package com.springbootgs.springbootgradesubmissionapi.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
+import com.springbootgs.springbootgradesubmissionapi.service.StudentService;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
+
+    @Autowired
+    StudentService studentService;
     
     // GET a student by id
     @GetMapping("/{id}")
@@ -29,7 +34,7 @@ public class StudentController {
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) { // de-serialize payload from req from json to a student java obj (new obj created here) with @RequestBody
         // Call Service method
 
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+        return new ResponseEntity<>(studentService.saveStudent(student), HttpStatus.CREATED);
     }
 
     // DELETE a student by id
