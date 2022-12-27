@@ -1,5 +1,9 @@
 package com.springbootgs.springbootgradesubmissionapi.repository;
 
-public class GradeRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
+
+public interface GradeRepository extends CrudRepository<Grade, Long>{
     
 }

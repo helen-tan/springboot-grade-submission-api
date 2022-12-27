@@ -2,6 +2,7 @@ package com.springbootgs.springbootgradesubmissionapi.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
+import com.springbootgs.springbootgradesubmissionapi.service.GradeService;
 
 @RestController
 @RequestMapping("/grade")
 public class GradeController {
+
+    @Autowired
+    GradeService gradeService;
+    
     // GET the grade of a student (based on student Id) for a course (based on course id)
     @GetMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> getGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
