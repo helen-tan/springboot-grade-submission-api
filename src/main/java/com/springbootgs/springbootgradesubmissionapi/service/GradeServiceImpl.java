@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
+import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.repository.GradeRepository;
+import com.springbootgs.springbootgradesubmissionapi.repository.StudentRepository;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -14,6 +16,9 @@ public class GradeServiceImpl implements GradeService {
     @Autowired
     GradeRepository gradeRepository;
     
+    @Autowired
+    StudentRepository studentRepository;
+
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
         return null;
@@ -21,6 +26,11 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public Grade saveGrade(Grade grade, Long studentId, Long courseId) {
+        // Assign grade to student
+        // fetch student from repo first
+        Student student = studentRepository.findById(studentId).get();
+        grade.setStudent(student); // assign the student to the grade
+
         return gradeRepository.save(grade);
     }
 
