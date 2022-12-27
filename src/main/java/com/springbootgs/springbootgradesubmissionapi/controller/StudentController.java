@@ -40,13 +40,13 @@ public class StudentController {
     public ResponseEntity<HttpStatus> deleteStudent(@PathVariable Long id) {
         // Call Service method
         studentService.deleteStudent(id);
-        
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // GET all students
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getStudents() {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
     }
 }
