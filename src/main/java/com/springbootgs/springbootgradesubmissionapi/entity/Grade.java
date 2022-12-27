@@ -18,9 +18,9 @@ public class Grade {
 
     @Id // this column is primary key - values uniquely identify a grade
     @GeneratedValue(strategy = GenerationType.IDENTITY) // every id is auto-generated
-    @Column(name = "id")
+    @Column(name = "id") // column name
     private Long id;
-    @Column(name = "score")
+    @Column(name = "score", nullable = false)
     private String score;
 
 }
