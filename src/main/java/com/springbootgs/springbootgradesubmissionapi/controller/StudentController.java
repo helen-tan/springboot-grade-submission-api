@@ -32,14 +32,15 @@ public class StudentController {
     // POST - Create a student
     @PostMapping
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) { // de-serialize payload from req from json to a student java obj (new obj created here) with @RequestBody
-        // Call Service method
-
         return new ResponseEntity<>(studentService.saveStudent(student), HttpStatus.CREATED);
     }
 
     // DELETE a student by id
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteStudent(@PathVariable Long id) {
+        // Call Service method
+        studentService.deleteStudent(id);
+        
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
