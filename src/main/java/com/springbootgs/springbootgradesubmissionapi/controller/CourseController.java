@@ -26,7 +26,7 @@ public class CourseController {
     // GET a course by id
     @GetMapping("/{id}")
     public ResponseEntity<Course> getCourse(@PathVariable Long id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(courseService.getCourse(id), HttpStatus.OK);
     }
 
     // POST - Create a course
@@ -46,6 +46,6 @@ public class CourseController {
     // GET all courses
     @GetMapping("/all")
     public ResponseEntity<List<Course>> getCourses() {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(courseService.getCourses(), HttpStatus.OK);
     }
 }

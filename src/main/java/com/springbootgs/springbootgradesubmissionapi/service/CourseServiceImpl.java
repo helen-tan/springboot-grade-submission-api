@@ -16,7 +16,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourse(Long id) {
-        return null;
+        return courseRepository.findById(id).get();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCourses() {
-        return null;
+        return (List<Course>) courseRepository.findAll();
     }
 
 }
