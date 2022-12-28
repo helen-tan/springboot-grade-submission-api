@@ -1,5 +1,8 @@
 package com.springbootgs.springbootgradesubmissionapi.repository;
 
-public class CourseRepository {
-    
+import org.springframework.data.repository.CrudRepository;
+
+import com.springbootgs.springbootgradesubmissionapi.entity.Course;
+
+public interface CourseRepository extends CrudRepository<Course, Long>{
 }
