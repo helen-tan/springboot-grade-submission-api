@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Table(name = "student") // Name the table
 @Getter // Lombok-enabled - generates getters based on defined fields
 @Setter // Lombok-enabled - generates
-@RequiredArgsConstructor
+@RequiredArgsConstructor // Lombok - Generates a constructor w required arguments (marked w @NonNull)
 @NoArgsConstructor
 public class Student {
     @Id
@@ -44,7 +45,7 @@ public class Student {
     // mappedBy: Need to tell JPA that the relationship is aldy mapped by the owner of the relationship/ the one managing the foreign key. Otherwise Spring will create a join table in an attempt to map the relationship
     // Set mappedBy to the property that maps the relationship
     @JsonIgnore // So that grades list will not be part of json response. When we return a student entity and serializing its fields into json, we cannot allow the List of entities to be part of the serialization process
-    @OneToMany(mappedBy = "student") 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL) 
     private List<Grade> grades;
 
     // Constructor with all fields - generated with Lombok's @AllArgsContructor
