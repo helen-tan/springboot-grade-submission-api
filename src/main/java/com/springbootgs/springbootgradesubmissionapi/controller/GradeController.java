@@ -27,7 +27,7 @@ public class GradeController {
     // GET the grade of a student (based on student Id) for a course (based on course id)
     @GetMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<Grade> getGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(gradeService.getGrade(studentId, courseId), HttpStatus.OK);
     }
 
     // POST - Create a grade for a student for a course
