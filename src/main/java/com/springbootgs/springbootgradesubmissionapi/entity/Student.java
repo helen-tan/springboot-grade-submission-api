@@ -1,33 +1,51 @@
 package com.springbootgs.springbootgradesubmissionapi.entity;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity // Telling Spring Boot JPA to create a (student) table that stores student entities 
 @Table(name = "student") // Name the table
 @Getter // Lombok-enabled - generates getters based on defined fields
 @Setter // Lombok-enabled - generates
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @NonNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @NonNull
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
+
+    // Tell Spring Boot that there will be a one-to-many relationship, as Spring JPA creates the grade table
+    // one-to-many relationship between 1 student and a List of grades
+    // mappedBy: Need to tell JPA that the relationship is aldy mapped by the owner of the relationship/ the one managing the foreign key. Otherwise Spring will create a join table in an attempt to map the relationship
+    // Set mappedBy to the property that maps the relationship
+    @JsonIgnore // So that grades list will not be part of json response. When we return a student entity and serializing its fields into json, we cannot allow the List of entities to be part of the serialization process
+    @OneToMany(mappedBy = "student") 
+    private List<Grade> grades;
 
     // Constructor with all fields - generated with Lombok's @AllArgsContructor
     // public Student(Long id, String name, LocalDate birthDate) {
