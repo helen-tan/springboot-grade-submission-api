@@ -8,10 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.*;
 
 @Entity
-@Table(name = "grade")
+@Table(name = "grade", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"student_id", "course_id"}) // Means every student_id & course_id pair needs to be unique
+})
 @Getter // Lombok-enabled - generates getters based on defined fields
 @Setter // Lombok-enabled - generates
 @AllArgsConstructor
