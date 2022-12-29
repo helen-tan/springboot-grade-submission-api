@@ -43,7 +43,11 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public Grade updateGrade(String score, Long studentId, Long courseId) {
-        return null;
+        // Fetch a grade that already exists
+        Grade grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
+        // Update the grade
+        grade.setScore(score);
+        return gradeRepository.save(grade);
     }
 
     @Override
