@@ -26,8 +26,14 @@ public class Grade {
     private String score;
 
     // Tell Spring Boot that there will be a many-to-one relationship, as Spring JPA creates the grade table
+    // Create many-to-one relationship with student
     // Many grades will be associated with one student. Child table will manage the foreign key
     @ManyToOne(optional = false) 
     @JoinColumn(name = "student_id", referencedColumnName = "id") // Define foreign key column (needs to reference the primary key of another table)
     private Student student;
+
+    // Create many-to-one relationship with course
+    @ManyToOne(optional = false) 
+    @JoinColumn(name = "course_id", referencedColumnName = "id") // Define foreign key column (needs to reference the primary key of another table)
+    private Course course;
 }
