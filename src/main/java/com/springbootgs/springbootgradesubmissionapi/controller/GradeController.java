@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
-import com.springbootgs.springbootgradesubmissionapi.repository.GradeRepository;
 import com.springbootgs.springbootgradesubmissionapi.service.GradeService;
 
 @RestController
@@ -65,6 +64,6 @@ public class GradeController {
     // GET all grades
     @GetMapping("/all")
     public ResponseEntity<List<Grade>> getGrades() {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(gradeService.getAllGrades(), HttpStatus.OK);
     }
 }
