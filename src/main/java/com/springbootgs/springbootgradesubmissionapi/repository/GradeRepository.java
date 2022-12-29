@@ -1,5 +1,6 @@
 package com.springbootgs.springbootgradesubmissionapi.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -16,4 +17,6 @@ public interface GradeRepository extends CrudRepository<Grade, Long>{
 
     @Transactional // Otherwise delete will have error (Common among deleteBy specialized methods)
     void deleteByStudentIdAndCourseId(Long studentId, Long courseId);
+
+    List<Grade> findByStudentId(Long studentId);
 }
