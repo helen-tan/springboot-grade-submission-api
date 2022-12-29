@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
         return (List<Student>) studentRepository.findAll();
     }
 
-    // Function to unwrap the Optional
+    // Function to unwrap the Student Optional entity
     static Student unwrapStudent(Optional<Student> entity, Long id) {
         if (entity.isPresent()) {
             return entity.get(); // .get() to unwrap the Optional
