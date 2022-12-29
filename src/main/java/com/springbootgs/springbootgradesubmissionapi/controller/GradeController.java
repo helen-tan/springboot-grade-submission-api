@@ -59,7 +59,7 @@ public class GradeController {
     // GET a list of grades based on course
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Grade>> getCourseGrades(@PathVariable Long courseId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(gradeService.getCourseGrades(courseId), HttpStatus.OK);
     }
 
     // GET all grades
