@@ -1,11 +1,13 @@
 package com.springbootgs.springbootgradesubmissionapi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
+import com.springbootgs.springbootgradesubmissionapi.exception.StudentNotFoundException;
 import com.springbootgs.springbootgradesubmissionapi.repository.StudentRepository;
 
 @Service
@@ -16,7 +18,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudent(Long id) {
-        return studentRepository.findById(id).get();
+        // Set student as an Optional (as it risks being a null, if no such student exist)
+        Optional<Student> student = studentRepository.findById(id);
+        
+        if (student.isPresent()) {
+            return student.get(); // .get() to unwrap the Optional
+        } else {
+            throw new StudentNotFoundException(id); // custom unchecked exception
+        }
     }
 
     @Override
