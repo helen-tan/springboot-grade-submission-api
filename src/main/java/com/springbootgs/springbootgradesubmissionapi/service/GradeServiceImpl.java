@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springbootgs.springbootgradesubmissionapi.entity.Course;
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
+import com.springbootgs.springbootgradesubmissionapi.repository.CourseRepository;
 import com.springbootgs.springbootgradesubmissionapi.repository.GradeRepository;
 import com.springbootgs.springbootgradesubmissionapi.repository.StudentRepository;
 
@@ -19,9 +21,12 @@ public class GradeServiceImpl implements GradeService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
-        return gradeRepository.findByStudentId(studentId);
+        return gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 
     @Override
@@ -29,7 +34,9 @@ public class GradeServiceImpl implements GradeService {
         // Assign grade to student
         // fetch student from repo first
         Student student = studentRepository.findById(studentId).get();
+        Course course = courseRepository.findById(courseId).get();
         grade.setStudent(student); // assign the student to the grade
+        grade.setCourse(course);   // assign a course
 
         return gradeRepository.save(grade);
     }
