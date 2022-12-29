@@ -30,19 +30,26 @@ public class GradeServiceImpl implements GradeService {
     public Grade getGrade(Long studentId, Long courseId) {
         Optional<Grade> grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
 
-        if (grade.isPresent()) {
-            return grade.get();
-        } else {
-            throw new GradeNotFoundException(studentId, courseId);
-        }
+        return unwrapGrade(grade, studentId, courseId);
+
+        // if (grade.isPresent()) {
+        //     return grade.get();
+        // } else {
+        //     throw new GradeNotFoundException(studentId, courseId);
+        // }
     }
 
     @Override
     public Grade saveGrade(Grade grade, Long studentId, Long courseId) {
         // Assign grade to student
         // fetch student from repo first
-        Student student = studentRepository.findById(studentId).get();
-        Course course = courseRepository.findById(courseId).get();
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+
+        // Unwrap the Optional with the unwrap function in the Service, which can catch the null error from unwrapping a null Optional / if there are no such student or course 
+        Student student = StudentServiceImpl.unwrapStudent(studentOptional, courseId);
+        Course course = CourseServiceImpl.unwrapCourse(courseOptional, courseId);
+
         grade.setStudent(student); // assign the student to the grade
         grade.setCourse(course);   // assign a course
 
