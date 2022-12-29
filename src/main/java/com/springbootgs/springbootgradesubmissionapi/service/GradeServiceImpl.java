@@ -53,16 +53,22 @@ public class GradeServiceImpl implements GradeService {
     public Grade updateGrade(String score, Long studentId, Long courseId) {
         // Fetch a grade that already exists
         Optional<Grade> grade = gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
-        // If grade does not exist
-        if (grade.isPresent()) {
-            Grade unwrappedGrade = grade.get(); // Unwrap Optional
-            // Update the grade object
-            unwrappedGrade.setScore(score);
-            // Save into DB
-            return gradeRepository.save(unwrappedGrade);
-        } else {
-            throw new GradeNotFoundException(studentId, courseId);
-        }
+        Grade unwrappedGrade = unwrapGrade(grade, studentId, courseId);
+        // Update the grade object
+        unwrappedGrade.setScore(score);
+        // Save into DB
+        return gradeRepository.save(unwrappedGrade);
+
+        // // If grade exist
+        // if (grade.isPresent()) {
+        //     Grade unwrappedGrade = grade.get(); // Unwrap Optional
+        //     // Update the grade object
+        //     unwrappedGrade.setScore(score);
+        //     // Save into DB
+        //     return gradeRepository.save(unwrappedGrade);
+        // } else {
+        //     throw new GradeNotFoundException(studentId, courseId);
+        // }
     }
 
     @Override
@@ -83,6 +89,15 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public List<Grade> getAllGrades() {
         return (List<Grade>) gradeRepository.findAll();
+    }
+
+    // Unwarp the Grade Optional
+    static Grade unwrapGrade(Optional<Grade> entity, Long studentId, Long courseId) {
+       
+        if (entity.isPresent()) {
+            return entity.get();
+        }  // If grade does not exist
+        else throw new GradeNotFoundException(studentId, courseId);
     }
 
 }
