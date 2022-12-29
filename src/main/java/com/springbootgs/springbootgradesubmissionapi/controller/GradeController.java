@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
+import com.springbootgs.springbootgradesubmissionapi.repository.GradeRepository;
 import com.springbootgs.springbootgradesubmissionapi.service.GradeService;
 
 @RestController
@@ -45,6 +46,7 @@ public class GradeController {
     // DELETE a grade for a student for a course
     @DeleteMapping("/student/{studentId}/course/{courseId}")
     public ResponseEntity<HttpStatus> deleteGrade(@PathVariable Long studentId, @PathVariable Long courseId) {
+        gradeService.deleteGrade(studentId, courseId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
