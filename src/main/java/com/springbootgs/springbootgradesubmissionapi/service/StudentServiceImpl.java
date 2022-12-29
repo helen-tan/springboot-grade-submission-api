@@ -20,12 +20,7 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudent(Long id) {
         // Set student as an Optional (as it risks being a null, if no such student exist)
         Optional<Student> student = studentRepository.findById(id);
-        
-        if (student.isPresent()) {
-            return student.get(); // .get() to unwrap the Optional
-        } else {
-            throw new StudentNotFoundException(id); // custom unchecked exception
-        }
+        return unwrapStudent(student, id);
     }
 
     @Override
@@ -42,6 +37,15 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudents() {
         return (List<Student>) studentRepository.findAll();
     }
+
+    // Function to unwrap the Optional
+    static Student unwrapStudent(Optional<Student> entity, Long id) {
+        if (entity.isPresent()) {
+            return entity.get(); // .get() to unwrap the Optional
+        } 
+        else throw new StudentNotFoundException(id); // custom unchecked exception
+    }
+
 
 
 }
