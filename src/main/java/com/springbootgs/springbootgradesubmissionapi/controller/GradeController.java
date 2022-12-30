@@ -36,12 +36,7 @@ public class GradeController {
 
     // POST - Create a grade for a student for a course
     @PostMapping("/student/{studentId}/course/{courseId}")
-    public ResponseEntity<Object> saveGrade(@PathVariable Long studentId, @PathVariable Long courseId, @Valid @RequestBody Grade grade, BindingResult result) {
-        if (result.hasErrors()) {
-            //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);   
-            return ResponseHandler.generateResponse("Invalid grade", HttpStatus.BAD_REQUEST, null);
-        }
-            
+    public ResponseEntity<Object> saveGrade(@PathVariable Long studentId, @PathVariable Long courseId, @Valid @RequestBody Grade grade) {
         return new ResponseEntity<>(gradeService.saveGrade(grade, studentId, courseId), HttpStatus.CREATED);
     }
 

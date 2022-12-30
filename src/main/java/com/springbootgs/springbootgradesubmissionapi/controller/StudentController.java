@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootgs.springbootgradesubmissionapi.ApplicationExceptionHandler;
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.service.StudentService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/student")
@@ -31,7 +34,7 @@ public class StudentController {
 
     // POST - Create a student
     @PostMapping
-    public ResponseEntity<Student> saveStudent(@RequestBody Student student) { // de-serialize payload from req from json to a student java obj (new obj created here) with @RequestBody
+    public ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student) { // de-serialize payload from req from json to a student java obj (new obj created here) with @RequestBody
         return new ResponseEntity<>(studentService.saveStudent(student), HttpStatus.CREATED);
     }
 

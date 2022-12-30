@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springbootgs.springbootgradesubmissionapi.entity.Course;
 import com.springbootgs.springbootgradesubmissionapi.service.CourseService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/course")
 public class CourseController {
@@ -31,7 +33,7 @@ public class CourseController {
 
     // POST - Create a course
     @PostMapping
-    public ResponseEntity<Course> saveCourse(@RequestBody Course course) {
+    public ResponseEntity<Course> saveCourse(@Valid @RequestBody Course course) {
         return new ResponseEntity<>(courseService.saveCourse(course), HttpStatus.CREATED);
     }
 
