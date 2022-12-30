@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springbootgs.springbootgradesubmissionapi.ApplicationExceptionHandler;
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.service.StudentService;
 
