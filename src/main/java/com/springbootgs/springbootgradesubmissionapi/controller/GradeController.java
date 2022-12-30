@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootgs.response.ResponseHandler;
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
 import com.springbootgs.springbootgradesubmissionapi.service.GradeService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/grade")
@@ -32,7 +36,12 @@ public class GradeController {
 
     // POST - Create a grade for a student for a course
     @PostMapping("/student/{studentId}/course/{courseId}")
-    public ResponseEntity<Grade> saveGrade(@PathVariable Long studentId, @PathVariable Long courseId, @RequestBody Grade grade) {
+    public ResponseEntity<Object> saveGrade(@PathVariable Long studentId, @PathVariable Long courseId, @Valid @RequestBody Grade grade, BindingResult result) {
+        if (result.hasErrors()) {
+            //return new ResponseEntity<>(HttpStatus.BAD_REQUEST);   
+            return ResponseHandler.generateResponse("Invalid grade", HttpStatus.BAD_REQUEST, null);
+        }
+            
         return new ResponseEntity<>(gradeService.saveGrade(grade, studentId, courseId), HttpStatus.CREATED);
     }
 
