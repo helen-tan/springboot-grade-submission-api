@@ -13,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -33,10 +35,12 @@ public class Student {
 
     @NonNull
     @Column(name = "name", nullable = false)
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
     @NonNull
     @Column(name = "birth_date", nullable = false)
+    @Past(message = "The birth date must be in the past")
     private LocalDate birthDate;
 
     // Tell Spring Boot that there will be a one-to-many relationship, as Spring JPA creates the grade table
