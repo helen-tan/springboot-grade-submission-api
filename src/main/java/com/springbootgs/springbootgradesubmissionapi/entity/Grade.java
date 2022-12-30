@@ -1,5 +1,7 @@
 package com.springbootgs.springbootgradesubmissionapi.entity;
 
+import com.springbootgs.springbootgradesubmissionapi.validation.Score;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,9 @@ public class Grade {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // every id is auto-generated
     @Column(name = "id") // column name
     private Long id;
+
     @Column(name = "score", nullable = false)
+    @Score
     private String score;
 
     // Tell Spring Boot that there will be a many-to-one relationship, as Spring JPA creates the grade table
