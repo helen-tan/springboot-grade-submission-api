@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springbootgs.springbootgradesubmissionapi.entity.Course;
+import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.exception.CourseNotFoundException;
 import com.springbootgs.springbootgradesubmissionapi.repository.CourseRepository;
+import com.springbootgs.springbootgradesubmissionapi.repository.StudentRepository;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     @Override
     public Course getCourse(Long id) {
@@ -41,6 +46,18 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourses() {
         return (List<Course>) courseRepository.findAll();
+    }
+
+    @Override
+    public Course addStudentToCourse(Long studentId, Long courseId) {
+        Course course = getCourse(courseId); // getting the passed-in core
+        Optional<Student> student = studentRepository.findById(studentId); // getting the past-in core
+    
+        Student unwrappedStudent = StudentServiceImpl.unwrapStudent(student, studentId);
+
+        course.getStudents().add(unwrappedStudent);
+
+        return courseRepository.save(course);
     }
 
     // Function to unwrap the Course Optional entity
