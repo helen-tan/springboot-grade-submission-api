@@ -1,6 +1,7 @@
 package com.springbootgs.springbootgradesubmissionapi.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,7 @@ public class CourseController {
 
     // Get all Students enrolled in a course
     @GetMapping("/{id}/students")
-    public ResponseEntity<List<Student>> getEnrolledStudents(@PathVariable Long id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Set<Student>> getEnrolledStudents(@PathVariable Long id) {
+        return new ResponseEntity<>(courseService.getEnrolledStudents(id), HttpStatus.OK);
     }
 }

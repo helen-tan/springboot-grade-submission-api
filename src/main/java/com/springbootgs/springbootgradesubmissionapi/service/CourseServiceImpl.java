@@ -2,6 +2,7 @@ package com.springbootgs.springbootgradesubmissionapi.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,12 @@ public class CourseServiceImpl implements CourseService {
         course.getStudents().add(unwrappedStudent);
 
         return courseRepository.save(course);
+    }
+
+    @Override
+    public Set<Student> getEnrolledStudents(Long id) {
+        Course course = getCourse(id);
+        return course.getStudents();
     }
 
     // Function to unwrap the Course Optional entity
