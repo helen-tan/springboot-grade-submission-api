@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import lombok.Getter;
@@ -67,7 +69,12 @@ public class Student {
     // Create Many-to-Many relationship with course
     // mappedBy is put on the non-owning side of the relationship (which is Student bcos we decided that Course owns the relatinship)
     // without mappedBy, Sping JPA will automatically create another join table
-    @ManyToMany(mappedBy = "students") 
+    @ManyToMany // (mappedBy = "students") 
     @JsonIgnore // to avoid recursive loop
+    @JoinTable(
+        name = "course_student", // name of join table
+        joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"), // create foreign key column that corresponds to the primary key of the entity that owns the association
+        inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id") //  creates foreign key column that corresponds to the entity doesn't own the association
+    )
     private Set<Course> courses;
 }
