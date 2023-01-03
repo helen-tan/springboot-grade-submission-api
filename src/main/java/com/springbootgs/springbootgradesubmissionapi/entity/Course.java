@@ -10,6 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -47,5 +50,15 @@ public class Course {
     @JsonIgnore
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
+
+    // Create Many-to-Many relationship with student
+    @ManyToMany
+    // Create join table
+    @JoinTable(
+        name = "course_student", // name of join table
+        joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), // create foreign key column that corresponds to the primary key of the entity that owns the association
+        inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id") //  creates foreign key column that corresponds to the entity doesn't own the association
+    )
+    private List<Student> students;
 }
 
