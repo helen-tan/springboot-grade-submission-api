@@ -2,12 +2,15 @@ package com.springbootgs.springbootgradesubmissionapi.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springbootgs.springbootgradesubmissionapi.entity.Course;
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.exception.StudentNotFoundException;
+import com.springbootgs.springbootgradesubmissionapi.repository.CourseRepository;
 import com.springbootgs.springbootgradesubmissionapi.repository.StudentRepository;
 
 @Service
@@ -15,6 +18,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     @Override
     public Student getStudent(Long id) {
@@ -46,6 +52,9 @@ public class StudentServiceImpl implements StudentService {
         else throw new StudentNotFoundException(id); // custom unchecked exception
     }
 
-
-
+    @Override
+    public Set<Course> getEnrolledCourses(Long id) {
+        Student student = getStudent(id);
+        return student.getCourses();
+    }
 }

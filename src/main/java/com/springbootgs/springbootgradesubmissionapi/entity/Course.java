@@ -60,6 +60,7 @@ public class Course {
         joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), // create foreign key column that corresponds to the primary key of the entity that owns the association
         inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id") //  creates foreign key column that corresponds to the entity doesn't own the association
     )
+    @JsonIgnore
     private Set<Student> students;
 }
 

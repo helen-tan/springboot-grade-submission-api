@@ -1,6 +1,7 @@
 package com.springbootgs.springbootgradesubmissionapi.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootgs.springbootgradesubmissionapi.entity.Course;
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.service.StudentService;
 
@@ -50,5 +52,11 @@ public class StudentController {
     @GetMapping("/all")
     public ResponseEntity<List<Student>> getStudents() {
         return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
+    }
+
+    // Get all courses a student has enrolled in
+    @GetMapping("/{id}/courses")
+    public ResponseEntity<Set<Course>> getEnrolledCourses(@PathVariable Long id) {
+        return new ResponseEntity<>(studentService.getEnrolledCourses(id), HttpStatus.OK);
     }
 }
