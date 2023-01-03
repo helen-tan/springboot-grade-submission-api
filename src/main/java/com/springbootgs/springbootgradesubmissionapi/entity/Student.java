@@ -67,5 +67,6 @@ public class Student {
     // mappedBy is put on the non-owning side of the relationship (which is Student bcos we decided that Course owns the relatinship)
     // without mappedBy, Sping JPA will automatically create another join table
     @ManyToMany(mappedBy = "students") 
+    @JsonIgnore // to avoid recursive loop
     private List<Course> courses;
 }
