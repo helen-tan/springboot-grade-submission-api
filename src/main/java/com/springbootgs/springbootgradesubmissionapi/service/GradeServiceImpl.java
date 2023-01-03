@@ -10,6 +10,7 @@ import com.springbootgs.springbootgradesubmissionapi.entity.Course;
 import com.springbootgs.springbootgradesubmissionapi.entity.Grade;
 import com.springbootgs.springbootgradesubmissionapi.entity.Student;
 import com.springbootgs.springbootgradesubmissionapi.exception.GradeNotFoundException;
+import com.springbootgs.springbootgradesubmissionapi.exception.StudentNotEnrolledException;
 import com.springbootgs.springbootgradesubmissionapi.repository.CourseRepository;
 import com.springbootgs.springbootgradesubmissionapi.repository.GradeRepository;
 import com.springbootgs.springbootgradesubmissionapi.repository.StudentRepository;
@@ -49,6 +50,9 @@ public class GradeServiceImpl implements GradeService {
         // Unwrap the Optional with the unwrap function in the Service, which can catch the null error from unwrapping a null Optional / if there are no such student or course 
         Student student = StudentServiceImpl.unwrapStudent(studentOptional, courseId);
         Course course = CourseServiceImpl.unwrapCourse(courseOptional, courseId);
+
+        // Check if student is enrolled in the course first (CANNOT ASSIGN STUDENT A GRADE IN A COURSE THEY ARE NOT ENROLLED IN)
+        if (!student.getCourses().contains(course)) throw new StudentNotEnrolledException(studentId, courseId);
 
         grade.setStudent(student); // assign the student to the grade
         grade.setCourse(course);   // assign a course
