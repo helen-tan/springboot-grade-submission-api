@@ -2,6 +2,7 @@ package com.springbootgs.springbootgradesubmissionapi.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -68,5 +69,5 @@ public class Student {
     // without mappedBy, Sping JPA will automatically create another join table
     @ManyToMany(mappedBy = "students") 
     @JsonIgnore // to avoid recursive loop
-    private List<Course> courses;
+    private Set<Course> courses;
 }

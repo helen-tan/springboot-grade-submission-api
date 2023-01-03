@@ -1,6 +1,7 @@
 package com.springbootgs.springbootgradesubmissionapi.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -59,6 +60,6 @@ public class Course {
         joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"), // create foreign key column that corresponds to the primary key of the entity that owns the association
         inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id") //  creates foreign key column that corresponds to the entity doesn't own the association
     )
-    private List<Student> students;
+    private Set<Student> students;
 }
 
