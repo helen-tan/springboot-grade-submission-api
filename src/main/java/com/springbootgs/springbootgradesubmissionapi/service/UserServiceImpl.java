@@ -26,6 +26,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
+        // hash the pw that user passed in
+        String hashedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        // set the user's pw to the hashed pw for saving in the db
+        user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
 
