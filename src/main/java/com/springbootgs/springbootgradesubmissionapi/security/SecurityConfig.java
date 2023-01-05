@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.springbootgs.springbootgradesubmissionapi.security.filter.AuthenticationFilter;
+
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -15,6 +17,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        authenticationFilter.setFilterProcessesUrl("/authenticate");
+
         http        
             .headers().frameOptions().disable() // New Line: the h2 console runs on a "frame". By default, Spring Security prevents rendering within an iframe. This line disables its prevention.
             .and()
@@ -24,6 +29,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() // signup path - requests here don't need authentication
             .anyRequest().authenticated()
             .and()
+            .addFilter(authenticationFilter)
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
     }
