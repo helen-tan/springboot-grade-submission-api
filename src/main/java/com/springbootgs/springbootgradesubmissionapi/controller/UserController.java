@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping("/register")
 	public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-		return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
     
 }
