@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
-    // /login - first method to be invoked when request is made on /login
+    // first method to be invoked when request is made on /authenticate
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {

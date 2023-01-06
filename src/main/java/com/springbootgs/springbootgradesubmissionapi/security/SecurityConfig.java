@@ -8,6 +8,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.springbootgs.springbootgradesubmissionapi.security.filter.AuthenticationFilter;
+import com.springbootgs.springbootgradesubmissionapi.security.filter.ExceptionHandlerFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -29,6 +30,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() // signup path - requests here don't need authentication
             .anyRequest().authenticated()
             .and()
+            .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class) // Run FilterOne before AuthenticationFilter
             .addFilter(authenticationFilter)
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
