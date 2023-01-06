@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.springbootgs.springbootgradesubmissionapi.security.filter.AuthenticationFilter;
 import com.springbootgs.springbootgradesubmissionapi.security.filter.ExceptionHandlerFilter;
+import com.springbootgs.springbootgradesubmissionapi.security.manager.CustomAuthenticationManager;
 
 import lombok.AllArgsConstructor;
 
@@ -16,9 +17,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfig {
 
+    private CustomAuthenticationManager customAuthenticationManager;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(customAuthenticationManager);
         authenticationFilter.setFilterProcessesUrl("/authenticate");
 
         http        
