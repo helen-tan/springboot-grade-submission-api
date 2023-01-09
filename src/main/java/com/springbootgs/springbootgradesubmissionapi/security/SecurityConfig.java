@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.springbootgs.springbootgradesubmissionapi.security.filter.AuthenticationFilter;
 import com.springbootgs.springbootgradesubmissionapi.security.filter.ExceptionHandlerFilter;
+import com.springbootgs.springbootgradesubmissionapi.security.filter.JWTAuthorizationFilter;
 import com.springbootgs.springbootgradesubmissionapi.security.manager.CustomAuthenticationManager;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ public class SecurityConfig {
             .and()
             .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class) // Run FilterOne before AuthenticationFilter
             .addFilter(authenticationFilter)
+            .addFilterAfter(new JWTAuthorizationFilter(), AuthenticationFilter.class)
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
     }
