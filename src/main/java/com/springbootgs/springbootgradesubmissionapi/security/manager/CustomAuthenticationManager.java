@@ -26,7 +26,7 @@ public class CustomAuthenticationManager implements AuthenticationManager{
 
         // Check if the hashed version of the user input pw matches the one we have in the DB
         if (!bCryptPasswordEncoder.matches(authentication.getCredentials().toString(), user.getPassword())) {
-            throw new BadCredentialsException("Wrong Credentials"); // will invoke unsuccessfulAuthentication() in Authentication filter
+            throw new BadCredentialsException("Wrong Credentials"); // wrong pw. will invoke unsuccessfulAuthentication() in Authentication filter
         }
 
         // Successful Auth: Return Authentication object

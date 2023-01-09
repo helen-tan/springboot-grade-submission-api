@@ -53,6 +53,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
         System.out.println("Boohoo authentication failed!");
+
+        // Create response
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(failed.getMessage());
+        response.getWriter().flush();;
     }
 
     // successfulAuthentication() will get invoked once the authentication object is return upon successful auth in the Authentication Manager
