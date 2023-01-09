@@ -1,6 +1,7 @@
 package com.springbootgs.springbootgradesubmissionapi.security.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,7 +44,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 .getSubject(); // username
         
         // Set the Authentication object on the Security Context Holder (where Spring stores details of who is authenticated)
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList()); // use the correct constructor
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Authorize user to perform action
