@@ -1,14 +1,20 @@
 package com.springbootgs.springbootgradesubmissionapi.security.filter;
 
 import java.io.IOException;
+import java.util.Date;
+
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springbootgs.springbootgradesubmissionapi.entity.User;
+import com.springbootgs.springbootgradesubmissionapi.security.SecurityConstants;
 import com.springbootgs.springbootgradesubmissionapi.security.manager.CustomAuthenticationManager;
 
 import jakarta.servlet.FilterChain;
@@ -54,6 +60,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
         System.out.println("Woohoo authentication worked!"); 
+
+        // Create JWT token
+        String token = JWT.create()
+        .withSubject(authResult.getName()) // in JWT payload
+        .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.TOKEN_EXPIRATION)) // in JWT payload
+        .sign(Algorithm.HMAC512(SecurityConstants.SECRET_KEY)); // sign token with the HMAC512 algorithm
+
+        response.addHeader(SecurityConstants.AUTHORIZATION, SecurityConstants.BEARER + token);
     }
     
 }
